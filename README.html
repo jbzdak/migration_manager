@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
+<title>Django migration manager</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7056 2011-06-17 10:50:48Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-migration-manager">
+<h1 class="title">Django migration manager</h1>
+
+<p>This is a package that is manages folders containing handmane migration sql code, applies this code,
+and allows trawersal between versions.</p>
+<p>What this application enables:</p>
+<ul class="simple">
+<li>Keeps a repository of migration files (either sql, xml or whatever).</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>Helps to manage such a repository</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>Allows automatical migration between versions (backward migrations supported)</li>
+</ul>
+<blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>Executes scripts via <cite>psql</cite> command, this is due to the fact that there is no way (at least none</dt>
+<dd><p class="first last">I'm aware of) to execute multicommand sql scripts via python DB-API, without parsing this
+sql by hand.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</blockquote>
+<p>and that's all.</p>
+<p>It works with postgresql only (but I guess that using other databases would be straightforward).</p>
+<div class="section" id="side-note">
+<h1>Side note</h1>
+<p>Ordinarily you should rather try to use django ORM and South to provide migration functionality!
+But then I needed a database that has some psql extensions (which transcend django's orm
+functionality).</p>
+<div class="section" id="concepts">
+<h2>Concepts</h2>
+</div>
+</div>
+<div class="section" id="repository">
+<h1>Repository</h1>
+<p>Something that stores migrations. Repositories should use api of <cite>migration_manager.api.Repository</cite>.</p>
+<p>There is one repository defined, namely the <cite>FileSystemRepository</cite>, that storesm= migration in
+particular folder using following naming convention:
+'&quot;&lt;migration_id&gt;_&lt;migration_name&gt;.&lt;file extension&gt;&quot;'</p>
+</div>
+<div class="section" id="db-location">
+<h1>Db location</h1>
+<p>Something that stores database credentials, it is able to get these from settings, but most probably
+you'll want to override these, as django database user shouldn't be able to change schema.</p>
+</div>
+<div class="section" id="serializer">
+<h1>Serializer</h1>
+<p>Someting that stores sql snippets to a file.</p>
+<p>There are following defined serializers:</p>
+<dl class="docutils">
+<dt>PlaintextSerializer:</dt>
+<dd>this serializer stores sql snippets as plain sql, unicode encoded, files. It does not support
+backward migrations.</dd>
+<dt>XmlSerializer:</dt>
+<dd>stores sql migration snippets as XML files with brain dead simple schema. It supports backward
+migrations.</dd>
+</dl>
+</div>
+<div class="section" id="version-check">
+<h1>Version check</h1>
+<p>Is an object that checks current version of schema stored in the database, and is able to produce
+SQL string that updates this version no.</p>
+</div>
+<div class="section" id="manager">
+<h1>Manager</h1>
+<p>Object that manages the repository.</p>
+<div class="section" id="provided-commands">
+<h2>Provided Commands</h2>
+<p>These are django commands that provide this module's functionality.</p>
+</div>
+</div>
+<div class="section" id="new-migration">
+<h1>New migration</h1>
+<p>Adds new migration.</p>
+</div>
+<div class="section" id="migrate">
+<h1>Migrate</h1>
+<p>Migrates to particular migration number, raising error if there is no migration path.</p>
+<div class="section" id="setup">
+<h2>Setup</h2>
+</div>
+</div>
+<div class="section" id="create-version-checker">
+<h1>Create version checker</h1>
+<p>Is an object that checks current version of schema stored in the database, and is able to produce
+SQL string that updates this version no.</p>
+<p>I use following:</p>
+<pre class="literal-block">
+class VersionCheck(object):
+
+   def __init__(self, db_location):
+       super(VersionCheck, self).__init__()
+       self.db_location = db_location
+
+   &#64;property
+   def using(self):
+       return self.db_location.using
+
+   def schema_update_script(self, version):
+       return &quot;SELECT set_schema_version('{:05d}');\n&quot;.format(int(version))
+
+   &#64;property
+   def version(self):
+       return int(utils.execute_string_query(&quot;SELECT get_schema_version();&quot;, database=self.using)[0][0][0])
+</pre>
+</div>
+<div class="section" id="create-repository-instance">
+<h1>Create repository instance</h1>
+<p>Create a repository instance and put it somewhere global:</p>
+<pre class="literal-block">
+def my_manager(db_location = None, repository = REPOSITORY):
+
+   if db_location is None:
+       db_location = migration_manager.PostgresDBLocation()
+       db_location.update_from_django_config('default')
+
+   manager = migration_manager.PsqlManager(
+       db_location,
+       repository= migration_manager.FileSystemRepository(repository),
+       serializer=migration_manager.XmlSerializer(),
+       version_check=version check
+   )
+   return manager
+</pre>
+</div>
+<div class="section" id="setup-settings-py">
+<h1>Setup settings py</h1>
+<p>Set <cite>MIGRATION_MANAGERS</cite> setting. It should look like that:</p>
+<pre class="literal-block">
+MIGRATION_MANAGERS = (
+   (&quot;manager_name&quot;, &quot;manager_module.MANAGER&quot;),
+   (&quot;other&quot;, &quot;manager_module.OTHER_MANAGER&quot;),
+)
+</pre>
+<p>it is a touple of name -- manager path mappings. Paths should point to
+<cite>migration_manager.api.Manager</cite> instances. Names can be passed to management commands.</p>
+<p>First defined manager is the 'default' one.</p>
+<div class="section" id="i-want-to-do">
+<h2>I want to do</h2>
+</div>
+</div>
+<div class="section" id="i-want-to-manage-part-of-my-django-database-that-doesn-t-use-orm-and-i-use-postgresql">
+<h1>I want to manage part of my django database that doesn't use ORM, and I use postgresql</h1>
+<p>Than you have found your solution.</p>
+</div>
+<div class="section" id="i-want-to-manage-part-of-my-django-database-that-doesn-t-use-orm-and-i-don-t-use-postgresql">
+<h1>I want to manage part of my django database that doesn't use ORM, and I <strong>don't</strong> use postgresql</h1>
+<p>If you are willing to write code that connects to the database it will work.</p>
+<p>You will have to write own <cite>migration_manager.api.Transaction</cite> that connects to your database.</p>
+</div>
+<div class="section" id="i-want-to-manage-database-but-i-don-t-use-django">
+<h1>I want to manage database but I don't use django</h1>
+<p>Should be easy, look at 'django_commands' and rewrite this code using your command line utility.</p>
+</div>
+</div>
+</body>
+</html>

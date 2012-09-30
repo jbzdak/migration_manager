@@ -1,0 +1,19 @@
+<migrations name="Test migration">
+  <forward><![CDATA[CREATE TABLE django_comment_flags
+  (
+    id serial NOT NULL,
+    user_id integer NOT NULL,
+    comment_id integer NOT NULL,
+    flag character varying(30) NOT NULL,
+    flag_date timestamp with time zone NOT NULL,
+    CONSTRAINT django_comment_flags_pkey PRIMARY KEY (id ),
+    CONSTRAINT django_comment_flags_comment_id_fkey FOREIGN KEY (comment_id)
+        REFERENCES django_comments (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT django_comment_flags_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES auth_user (id) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT django_comment_flags_user_id_comment_id_flag_key UNIQUE (user_id , comment_id , flag )
+  )]]></forward>
+  <reverse><![CDATA[DROP TABLE auth_permission;]]></reverse>
+</migrations>

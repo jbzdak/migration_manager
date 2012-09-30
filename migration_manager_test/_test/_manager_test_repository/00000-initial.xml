@@ -1,0 +1,17 @@
+<migrations name="Initial">
+  <forward><![CDATA[CREATE TABLE auth_user_groups
+(
+  id serial NOT NULL,
+  user_id integer NOT NULL,
+  group_id integer NOT NULL,
+  CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id ),
+  CONSTRAINT auth_user_groups_group_id_fkey FOREIGN KEY (group_id)
+      REFERENCES auth_group (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT user_id_refs_id_831107f1 FOREIGN KEY (user_id)
+      REFERENCES auth_user (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT auth_user_groups_user_id_group_id_key UNIQUE (user_id , group_id )
+);]]></forward>
+  <reverse><![CDATA[DROP TABLE auth_user_groups;]]></reverse>
+</migrations>

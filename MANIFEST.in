@@ -1,0 +1,6 @@
+include *.txt
+include *.py
+recursive-include migration_manager_test *.html *.py
+prune .idea
+prune /venv
+prune /build
